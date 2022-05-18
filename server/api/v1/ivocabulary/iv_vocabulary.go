@@ -2,20 +2,19 @@ package ivocabulary
 
 import (
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
-    "github.com/flipped-aurora/gin-vue-admin/server/model/ivocabulary"
-    "github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
-    ivocabularyReq "github.com/flipped-aurora/gin-vue-admin/server/model/ivocabulary/request"
-    "github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
-    "github.com/flipped-aurora/gin-vue-admin/server/service"
-    "github.com/gin-gonic/gin"
-    "go.uber.org/zap"
+	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
+	"github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
+	"github.com/flipped-aurora/gin-vue-admin/server/model/ivocabulary"
+	ivocabularyReq "github.com/flipped-aurora/gin-vue-admin/server/model/ivocabulary/request"
+	"github.com/flipped-aurora/gin-vue-admin/server/service"
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 type VocabularyInfoApi struct {
 }
 
 var vocService = service.ServiceGroupApp.IvocabularyServiceGroup.VocabularyInfoService
-
 
 // CreateVocabularyInfo 创建VocabularyInfo
 // @Tags VocabularyInfo
@@ -30,7 +29,7 @@ func (vocApi *VocabularyInfoApi) CreateVocabularyInfo(c *gin.Context) {
 	var voc ivocabulary.VocabularyInfo
 	_ = c.ShouldBindJSON(&voc)
 	if err := vocService.CreateVocabularyInfo(voc); err != nil {
-        global.GVA_LOG.Error("创建失败!", zap.Error(err))
+		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {
 		response.OkWithMessage("创建成功", c)
@@ -50,7 +49,7 @@ func (vocApi *VocabularyInfoApi) DeleteVocabularyInfo(c *gin.Context) {
 	var voc ivocabulary.VocabularyInfo
 	_ = c.ShouldBindJSON(&voc)
 	if err := vocService.DeleteVocabularyInfo(voc); err != nil {
-        global.GVA_LOG.Error("删除失败!", zap.Error(err))
+		global.GVA_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -68,9 +67,9 @@ func (vocApi *VocabularyInfoApi) DeleteVocabularyInfo(c *gin.Context) {
 // @Router /voc/deleteVocabularyInfoByIds [delete]
 func (vocApi *VocabularyInfoApi) DeleteVocabularyInfoByIds(c *gin.Context) {
 	var IDS request.IdsReq
-    _ = c.ShouldBindJSON(&IDS)
+	_ = c.ShouldBindJSON(&IDS)
 	if err := vocService.DeleteVocabularyInfoByIds(IDS); err != nil {
-        global.GVA_LOG.Error("批量删除失败!", zap.Error(err))
+		global.GVA_LOG.Error("批量删除失败!", zap.Error(err))
 		response.FailWithMessage("批量删除失败", c)
 	} else {
 		response.OkWithMessage("批量删除成功", c)
@@ -90,7 +89,7 @@ func (vocApi *VocabularyInfoApi) UpdateVocabularyInfo(c *gin.Context) {
 	var voc ivocabulary.VocabularyInfo
 	_ = c.ShouldBindJSON(&voc)
 	if err := vocService.UpdateVocabularyInfo(voc); err != nil {
-        global.GVA_LOG.Error("更新失败!", zap.Error(err))
+		global.GVA_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
 	} else {
 		response.OkWithMessage("更新成功", c)
@@ -110,7 +109,7 @@ func (vocApi *VocabularyInfoApi) FindVocabularyInfo(c *gin.Context) {
 	var voc ivocabulary.VocabularyInfo
 	_ = c.ShouldBindQuery(&voc)
 	if err, revoc := vocService.GetVocabularyInfo(voc.ID); err != nil {
-        global.GVA_LOG.Error("查询失败!", zap.Error(err))
+		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
 		response.OkWithData(gin.H{"revoc": revoc}, c)
@@ -130,14 +129,14 @@ func (vocApi *VocabularyInfoApi) GetVocabularyInfoList(c *gin.Context) {
 	var pageInfo ivocabularyReq.VocabularyInfoSearch
 	_ = c.ShouldBindQuery(&pageInfo)
 	if err, list, total := vocService.GetVocabularyInfoInfoList(pageInfo); err != nil {
-	    global.GVA_LOG.Error("获取失败!", zap.Error(err))
-        response.FailWithMessage("获取失败", c)
-    } else {
-        response.OkWithDetailed(response.PageResult{
-            List:     list,
-            Total:    total,
-            Page:     pageInfo.Page,
-            PageSize: pageInfo.PageSize,
-        }, "获取成功", c)
-    }
+		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			Page:     pageInfo.Page,
+			PageSize: pageInfo.PageSize,
+		}, "获取成功", c)
+	}
 }

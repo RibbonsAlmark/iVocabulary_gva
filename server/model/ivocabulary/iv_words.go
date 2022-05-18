@@ -9,7 +9,7 @@ import (
 // 如果含有time.Time 请自行import time包
 type WordInfo struct {
       global.GVA_MODEL
-      Uuid  string `json:"uuid" form:"uuid" gorm:"column:uuid;comment:单词UUID;size:191;"`
+      Uuid  *int `json:"uuid" form:"uuid" gorm:"column:uuid;comment:单词UUID;size:64;"`
       Word  string `json:"word" form:"word" gorm:"column:word;comment:英文单词;size:128;"`
       PhoneticEn  string `json:"phoneticEn" form:"phoneticEn" gorm:"column:phonetic_en;comment:音标（英音）;size:191;"`
       PhoneticUs  string `json:"phoneticUs" form:"phoneticUs" gorm:"column:phonetic_us;comment:音标（美音）;size:191;"`

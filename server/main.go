@@ -5,6 +5,8 @@ import (
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/initialize"
 	"go.uber.org/zap"
+
+	snowflake "github.com/flipped-aurora/gin-vue-admin/server/plugin/snow_flake"
 )
 
 //go:generate go env -w GO111MODULE=on
@@ -23,6 +25,17 @@ func main() {
 	global.GVA_VP = core.Viper() // 初始化Viper
 	global.GVA_LOG = core.Zap()  // 初始化zap日志库
 	zap.ReplaceGlobals(global.GVA_LOG)
+
+	// Init snowfalke for uuid
+	var workerId uint32 = 1
+	sf, sf_err := snowflake.New(workerId)
+	if sf_err != nil {
+		global.GVA_LOG.Error("failed to initialize snowflake")
+	} else {
+		global.IV_SF = sf
+	}
+
+	// 初始化数据库
 	global.GVA_DB = initialize.Gorm() // gorm连接数据库
 	initialize.Timer()
 	initialize.DBList()
@@ -32,5 +45,6 @@ func main() {
 		db, _ := global.GVA_DB.DB()
 		defer db.Close()
 	}
+
 	core.RunWindowsServer()
 }

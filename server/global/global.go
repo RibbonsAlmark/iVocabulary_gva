@@ -15,6 +15,8 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
+
+	snowflake "github.com/flipped-aurora/gin-vue-admin/server/plugin/snow_flake"
 )
 
 var (
@@ -30,6 +32,8 @@ var (
 
 	BlackCache local_cache.Cache
 	lock       sync.RWMutex
+
+	IV_SF *snowflake.SnowFlake
 )
 
 // GetGlobalDBByDBName 通过名称获取db list中的db
