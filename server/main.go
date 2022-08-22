@@ -6,7 +6,7 @@ import (
 	"github.com/flipped-aurora/gin-vue-admin/server/initialize"
 	"go.uber.org/zap"
 
-	snowflake "github.com/flipped-aurora/gin-vue-admin/server/plugin/snow_flake"
+	snowflake "github.com/bwmarrin/snowflake"
 )
 
 //go:generate go env -w GO111MODULE=on
@@ -27,12 +27,12 @@ func main() {
 	zap.ReplaceGlobals(global.GVA_LOG)
 
 	// Init snowfalke for uuid
-	var workerId uint32 = 1
-	sf, sf_err := snowflake.New(workerId)
+	var workerId int64 = 1
+	node, sf_err := snowflake.NewNode(workerId)
 	if sf_err != nil {
 		global.GVA_LOG.Error("failed to initialize snowflake")
 	} else {
-		global.IV_SF = sf
+		global.IV_SF = node
 	}
 
 	// 初始化数据库

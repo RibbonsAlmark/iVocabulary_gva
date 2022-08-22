@@ -16,7 +16,7 @@ import (
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
 
-	snowflake "github.com/flipped-aurora/gin-vue-admin/server/plugin/snow_flake"
+	snowflake "github.com/bwmarrin/snowflake"
 )
 
 var (
@@ -33,7 +33,7 @@ var (
 	BlackCache local_cache.Cache
 	lock       sync.RWMutex
 
-	IV_SF *snowflake.SnowFlake
+	IV_SF *snowflake.Node
 )
 
 // GetGlobalDBByDBName 通过名称获取db list中的db

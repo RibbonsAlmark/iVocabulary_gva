@@ -57,9 +57,9 @@
     </div>
     <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="弹窗操作">
       <el-form :model="formData" label-position="right" label-width="80px">
-        <el-form-item label="单词本UUID:">
+        <!-- <el-form-item label="单词本UUID:">
           <el-input v-model.number="formData.uuid" clearable placeholder="请输入" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="单词本名称:">
           <el-input v-model="formData.name" clearable placeholder="请输入" />
         </el-form-item>

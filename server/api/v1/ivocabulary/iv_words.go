@@ -2,20 +2,19 @@ package ivocabulary
 
 import (
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
-    "github.com/flipped-aurora/gin-vue-admin/server/model/ivocabulary"
-    "github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
-    ivocabularyReq "github.com/flipped-aurora/gin-vue-admin/server/model/ivocabulary/request"
-    "github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
-    "github.com/flipped-aurora/gin-vue-admin/server/service"
-    "github.com/gin-gonic/gin"
-    "go.uber.org/zap"
+	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
+	"github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
+	"github.com/flipped-aurora/gin-vue-admin/server/model/ivocabulary"
+	ivocabularyReq "github.com/flipped-aurora/gin-vue-admin/server/model/ivocabulary/request"
+	"github.com/flipped-aurora/gin-vue-admin/server/service"
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 type WordInfoApi struct {
 }
 
 var wordsService = service.ServiceGroupApp.IvocabularyServiceGroup.WordInfoService
-
 
 // CreateWordInfo 创建WordInfo
 // @Tags WordInfo
@@ -30,7 +29,7 @@ func (wordsApi *WordInfoApi) CreateWordInfo(c *gin.Context) {
 	var words ivocabulary.WordInfo
 	_ = c.ShouldBindJSON(&words)
 	if err := wordsService.CreateWordInfo(words); err != nil {
-        global.GVA_LOG.Error("创建失败!", zap.Error(err))
+		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {
 		response.OkWithMessage("创建成功", c)
@@ -50,7 +49,7 @@ func (wordsApi *WordInfoApi) DeleteWordInfo(c *gin.Context) {
 	var words ivocabulary.WordInfo
 	_ = c.ShouldBindJSON(&words)
 	if err := wordsService.DeleteWordInfo(words); err != nil {
-        global.GVA_LOG.Error("删除失败!", zap.Error(err))
+		global.GVA_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -68,9 +67,9 @@ func (wordsApi *WordInfoApi) DeleteWordInfo(c *gin.Context) {
 // @Router /words/deleteWordInfoByIds [delete]
 func (wordsApi *WordInfoApi) DeleteWordInfoByIds(c *gin.Context) {
 	var IDS request.IdsReq
-    _ = c.ShouldBindJSON(&IDS)
+	_ = c.ShouldBindJSON(&IDS)
 	if err := wordsService.DeleteWordInfoByIds(IDS); err != nil {
-        global.GVA_LOG.Error("批量删除失败!", zap.Error(err))
+		global.GVA_LOG.Error("批量删除失败!", zap.Error(err))
 		response.FailWithMessage("批量删除失败", c)
 	} else {
 		response.OkWithMessage("批量删除成功", c)
@@ -90,7 +89,7 @@ func (wordsApi *WordInfoApi) UpdateWordInfo(c *gin.Context) {
 	var words ivocabulary.WordInfo
 	_ = c.ShouldBindJSON(&words)
 	if err := wordsService.UpdateWordInfo(words); err != nil {
-        global.GVA_LOG.Error("更新失败!", zap.Error(err))
+		global.GVA_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
 	} else {
 		response.OkWithMessage("更新成功", c)
@@ -110,7 +109,7 @@ func (wordsApi *WordInfoApi) FindWordInfo(c *gin.Context) {
 	var words ivocabulary.WordInfo
 	_ = c.ShouldBindQuery(&words)
 	if err, rewords := wordsService.GetWordInfo(words.ID); err != nil {
-        global.GVA_LOG.Error("查询失败!", zap.Error(err))
+		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
 		response.OkWithData(gin.H{"rewords": rewords}, c)
@@ -130,14 +129,14 @@ func (wordsApi *WordInfoApi) GetWordInfoList(c *gin.Context) {
 	var pageInfo ivocabularyReq.WordInfoSearch
 	_ = c.ShouldBindQuery(&pageInfo)
 	if err, list, total := wordsService.GetWordInfoInfoList(pageInfo); err != nil {
-	    global.GVA_LOG.Error("获取失败!", zap.Error(err))
-        response.FailWithMessage("获取失败", c)
-    } else {
-        response.OkWithDetailed(response.PageResult{
-            List:     list,
-            Total:    total,
-            Page:     pageInfo.Page,
-            PageSize: pageInfo.PageSize,
-        }, "获取成功", c)
-    }
+		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			Page:     pageInfo.Page,
+			PageSize: pageInfo.PageSize,
+		}, "获取成功", c)
+	}
 }
